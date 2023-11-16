@@ -33,21 +33,121 @@ const agregarCasa = async (req, res) => {
     const nuevaCasa = req.body;
 
     try {
-        await pool.query(casasModel.addRow, Object.values(nuevaCasa));
-        res.status(201).json({ message: 'Casa agregada correctamente' });
+        // Desestructuramos el objeto para obtener los valores en el orden correcto
+        const {
+            ParcelID,
+            LandUse,
+            PropertyAddress,
+            SaleDate,
+            SalePrice,
+            LegalReference,
+            SoldAsVacant,
+            OwnerName,
+            OwnerAddress,
+            Acreage,
+            TaxDistrict,
+            LandValue,
+            BuildingValue,
+            TotalValue,
+            YearBuilt,
+            Bedrooms,
+            FullBath,
+            HalfBath
+        } = nuevaCasa;
+
+        // Insertar la nueva casa
+        const [insertResult] = await pool.query(casasModel.addRow, [
+            ParcelID,
+            LandUse,
+            PropertyAddress,
+            SaleDate,
+            SalePrice,
+            LegalReference,
+            SoldAsVacant,
+            OwnerName,
+            OwnerAddress,
+            Acreage,
+            TaxDistrict,
+            LandValue,
+            BuildingValue,
+            TotalValue,
+            YearBuilt,
+            Bedrooms,
+            FullBath,
+            HalfBath
+        ]);
+
+        // Obtener el ID de la casa recién agregada
+        const newHouseID = insertResult.insertId;
+
+        // Construir el objeto de respuesta con los campos específicos
+        const responseObject = {
+            message: 'Casa agregada correctamente',
+            newHouse: {
+                UniqueID: newHouseID,
+                ParcelID,
+                LandUse,
+                PropertyAddress,
+                SaleDate,
+                SalePrice,
+                OwnerName
+            }
+        };
+
+        res.status(201).json(responseObject);
     } catch (error) {
         console.error(error);
         res.status(500).send('Error al agregar la casa');
     }
 };
 
+
 const modificarCasaPorID = async (req, res) => {
     const casaID = req.params.id;
     const datosActualizados = req.body;
 
     try {
+        // Desestructuramos el objeto para obtener los valores en el orden correcto
+        const {
+            ParcelID,
+            LandUse,
+            PropertyAddress,
+            SaleDate,
+            SalePrice,
+            LegalReference,
+            SoldAsVacant,
+            OwnerName,
+            OwnerAddress,
+            Acreage,
+            TaxDistrict,
+            LandValue,
+            BuildingValue,
+            TotalValue,
+            YearBuilt,
+            Bedrooms,
+            FullBath,
+            HalfBath
+        } = datosActualizados;
+
         const [result] = await pool.query(casasModel.updateByID, [
-            ...Object.values(datosActualizados),
+            ParcelID,
+            LandUse,
+            PropertyAddress,
+            SaleDate,
+            SalePrice,
+            LegalReference,
+            SoldAsVacant,
+            OwnerName,
+            OwnerAddress,
+            Acreage,
+            TaxDistrict,
+            LandValue,
+            BuildingValue,
+            TotalValue,
+            YearBuilt,
+            Bedrooms,
+            FullBath,
+            HalfBath,
             casaID,
         ]);
 

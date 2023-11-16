@@ -11,7 +11,6 @@ const config = {
 };
 
 const pool = mysql2.createPool(config);
-
 // Ejemplo de modelo con consultas preparadas
 const casasModel = {
     getAll: 'SELECT * FROM casasalioth',
@@ -19,6 +18,7 @@ const casasModel = {
     addRow: `
         INSERT INTO 
         casasalioth (
+          
             ParcelID, 
             LandUse, 
             PropertyAddress, 
