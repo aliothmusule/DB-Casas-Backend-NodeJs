@@ -194,10 +194,20 @@ const eliminarCasa = async (req, res) => {
     }
 };
 
+// Exporta un objeto que contiene varias funciones relacionadas con la gestión de casas
 module.exports = {
+    // Función para listar todas las casas disponibles
     listarCasas,
+
+    // Función para obtener una casa por su ID
     obtenerCasaPorID,
+
+    // Función para agregar una nueva casa
     agregarCasa,
+
+    // Función para modificar los datos de una casa existente por su ID
     modificarCasaPorID,
+
+    // Función para eliminar una casa por su ID
     eliminarCasa,
 };
